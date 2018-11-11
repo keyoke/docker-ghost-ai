@@ -1,12 +1,11 @@
 FROM ghost:2-alpine
-#WORKDIR /var/lib/ghost/current
 
 # Add app-insights globally
 RUN npm install -g applicationinsights
-# link app insights avoids projects npm package rebuild/validate
+# Link app insights to avoid rebuild/validate projects npm package tree
 RUN cd current && npm link applicationinsights 
 
-# Modify Ghost to Start monitoring
+# Modify Ghost to Start monitoring set ikey via Env Vars
 # ENV APPINSIGHTS_INSTRUMENTATIONKEY xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 RUN sed  -i.bak -e '/var startTime/i var appInsights = require("applicationinsights");' \
                 -e '/var startTime/i appInsights.setup().start();' current/index.js
