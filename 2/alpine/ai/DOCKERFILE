@@ -7,8 +7,6 @@ RUN npm install -g applicationinsights
 RUN cd current && npm link applicationinsights 
 
 # Modify Ghost to Start monitoring
-# process.env.APPINSIGHTS_INSTRUMENTATIONKEY
 # ENV APPINSIGHTS_INSTRUMENTATIONKEY xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 RUN sed  -i.bak -e '/var startTime/i var appInsights = require("applicationinsights");' \
                 -e '/var startTime/i appInsights.setup().start();' current/index.js
-
