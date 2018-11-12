@@ -7,5 +7,5 @@ RUN cd current && npm link applicationinsights
 
 # Modify Ghost to Start monitoring set ikey via Env Vars
 # ENV APPINSIGHTS_INSTRUMENTATIONKEY xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-# RUN sed  -i.bak -e "/debug('Required ghost');/i var appInsights = require('applicationinsights');" \
-#                 -e "/debug('Required ghost');/i appInsights.setup().start();" current/index.js
+RUN sed  -i.bak -e "/var startTime = Date.now(),/a appInsights = require('applicationinsights'), " \
+                -e "/ghost, express, common, urlService, parentApp;/a appInsights.setup().start();" current/index.js
