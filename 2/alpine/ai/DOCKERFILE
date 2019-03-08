@@ -1,7 +1,7 @@
 FROM ghost:2-alpine
 
 # Copy the bash file for inserting the AI bootstrap code
-COPY patch_code.sh /tmp
+COPY /2/alpine/ai/patch_code.sh /tmp
 # Make sure we can execute it
 RUN chmod +x /tmp/patch_code.sh
 
