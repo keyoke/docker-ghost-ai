@@ -1,15 +1,14 @@
 FROM ghost:2-alpine
 
+# Copy the bash file for inserting the AI bootstrap code
+COPY patch_code.sh /tmp
+# Make sure we can execute it
+RUN chmod +x /tmp/patch_code.sh
+
 # Add app-insights globally
 RUN npm install -g applicationinsights
 # Link app insights to avoid rebuild/validate projects npm package tree
 RUN cd current && npm link applicationinsights 
-
-# Copy the bash file for inserting the AI bootstrap code
-COPY patch_code.sh /tmp
-
-# Make sure we can execute it
-RUN chmod +x /tmp/patch_code.sh
 
 # Modify Ghost to Start monitoring set ikey via Env Vars
 # ENV APPINSIGHTS_INSTRUMENTATIONKEY xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
