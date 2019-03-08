@@ -5,7 +5,14 @@ RUN npm install -g applicationinsights
 # Link app insights to avoid rebuild/validate projects npm package tree
 RUN cd current && npm link applicationinsights 
 
+# Copy the bash file for inserting the AI bootstrap code
+COPY patch_code.sh /tmp
+
+# Make sure we can execute it
+RUN chmod +x /tmp/patch_code.sh
+
 # Modify Ghost to Start monitoring set ikey via Env Vars
 # ENV APPINSIGHTS_INSTRUMENTATIONKEY xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-RUN sed  -i.bak -e "/var startTime = Date.now(),/a appInsights = require('applicationinsights'), " \
-                -e "/ghost, express, common, urlService, parentApp;/a appInsights.defaultClient.context.tags['ai.cloud.role'] = 'Server'; appInsights.setup().start();" current/index.js
+# ENV AI_CLOUD_ROLE Frontend
+# ENV AI_CLOUD_ROLE_INSTANCE GhostInstance
+RUN [ "bash", "/tmp/patch_code.sh" ]
