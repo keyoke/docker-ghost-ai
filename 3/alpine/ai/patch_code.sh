@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "Adding NodeJS Application Insights Initialization"
+sed  -i.bak -e "/var startTime = Date.now(),/a appInsights = require('applicationinsights'), " -e "/ghost, express, common, urlService, parentApp;/a appInsights.setup().start();\nif(process.env.AI_CLOUD_ROLE) { appInsights.defaultClient.context.tags['ai.cloud.role'] = process.env.AI_CLOUD_ROLE; };\nif(process.env.AI_CLOUD_ROLE_INSTANCE) { appInsights.defaultClient.context.tags['ai.cloud.roleInstance'] = process.env.AI_CLOUD_ROLE_INSTANCE; };" current/index.js
