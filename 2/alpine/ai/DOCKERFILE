@@ -14,6 +14,7 @@ RUN mkdir /opt/ai && curl -o /opt/ai/ai-bootstrap.js https://raw.githubuserconte
 # ENV APPINSIGHTS_INSTRUMENTATIONKEY xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 # ENV AI_CLOUD_ROLE Frontend
 # ENV AI_CLOUD_ROLE_INSTANCE GhostInstance
-# When hosting in Azure App Svc - Web App Container, add the following "Startup File" command "--require /opt/ai/ai-bootstrap.js"
-# Or we could also use pre-load command "pm2 start --node-args='--require /opt/ai/ai-bootstrap.js'"
+# When hosting in Azure App Svc - Web App Container, could we do something like adding the following "Startup File" command "--require /opt/ai/ai-bootstrap.js"
+# Or could we also use pre-load command "pm2 start --node-args='--require /opt/ai/ai-bootstrap.js'"
+# instead of overriding the baseimage start CMD?
 CMD ["node", "--require /opt/ai/ai-bootstrap.js", "current/index.js"]
