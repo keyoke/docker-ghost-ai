@@ -12,5 +12,5 @@ COPY ai-bootstrap.js /opt/ai/
 # ENV APPINSIGHTS_INSTRUMENTATIONKEY xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 # ENV AI_CLOUD_ROLE Frontend
 # ENV AI_CLOUD_ROLE_INSTANCE GhostInstance
-# Lets platform agnositic node ENV VAR instead - NODE_OPTIONS='--require "/opt/ai/ai-bootstrap.js"'
+# Lets use platform agnositic node method to load AI instead of monkey patching i.e. NODE_OPTIONS='--require "/opt/ai/ai-bootstrap.js"'
 ENV NODE_OPTIONS='--require /opt/ai/ai-bootstrap.js'
