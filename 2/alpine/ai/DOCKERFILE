@@ -6,7 +6,7 @@ RUN apk --no-cache add curl
 # Add app-insights globally
 RUN npm install -g applicationinsights
 # Link app insights to avoid rebuild/validate projects npm package tree
-RUN cd current && npm link applicationinsights 
+# RUN cd current && npm link applicationinsights 
 
 RUN mkdir /opt/ai && curl -o /opt/ai/ai-bootstrap.js https://raw.githubusercontent.com/keyoke/Application-Insights-K8s-Codeless-Attach/master/agents/agents/2.8.33/nodejs/ai-bootstrap.js
 
