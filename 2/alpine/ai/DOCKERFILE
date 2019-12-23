@@ -4,15 +4,21 @@ FROM ghost:2-alpine
 RUN apk --no-cache add curl
 
 # Add app-insights globally
-RUN npm install -g applicationinsights
+RUN  mkdir /opt/ai && \
+        cd /opt/ai && \
+        npm install applicationinsights --save
+
+# Copy the ai-bootstrap.js file
+COPY ai-bootstrap.js /opt/ai/
+
 # Link app insights to avoid rebuild/validate projects npm package tree
 # RUN cd current && npm link applicationinsights 
 
-RUN mkdir /opt/ai && curl -o /opt/ai/ai-bootstrap.js https://raw.githubusercontent.com/keyoke/Application-Insights-K8s-Codeless-Attach/master/agents/agents/2.8.33/nodejs/ai-bootstrap.js
+# RUN mkdir /opt/ai && curl -o /opt/ai/ai-bootstrap.js https://raw.githubusercontent.com/keyoke/Application-Insights-K8s-Codeless-Attach/master/agents/agents/2.8.33/nodejs/ai-bootstrap.js
 
 # Configure AI via ENV VARS
 # ENV APPINSIGHTS_INSTRUMENTATIONKEY xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 # ENV AI_CLOUD_ROLE Frontend
 # ENV AI_CLOUD_ROLE_INSTANCE GhostInstance
 # Lets platform agnositic node ENV VAR instead - NODE_OPTIONS='--require "/opt/ai/ai-bootstrap.js"'
-ENV NODE_OPTIONS='--require "/opt/ai/ai-bootstrap.js"'
+ENV NODE_OPTIONS='--require /opt/ai/ai-bootstrap.js'
