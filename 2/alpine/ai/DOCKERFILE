@@ -1,17 +1,18 @@
 FROM ghost:2-alpine
 
-# Copy the bash file for inserting the AI bootstrap code
-COPY /2/alpine/ai/patch_code.sh /tmp
-# Make sure we can execute it
-RUN chmod +x /tmp/patch_code.sh
+# We need curl to download bootstrapper, we could also move this to previous build stage to keep this image cleaner.
+RUN apk add --update \
+    curl \
+    && rm -rf /var/cache/apk/*
 
 # Add app-insights globally
 RUN npm install -g applicationinsights
 # Link app insights to avoid rebuild/validate projects npm package tree
 RUN cd current && npm link applicationinsights 
 
-# Modify Ghost to Start monitoring set ikey via Env Vars
+RUN mkdir /opt/ai && curl -o /opt/ai/ai-bootstrap.js https://raw.githubusercontent.com/keyoke/Application-Insights-K8s-Codeless-Attach/master/agents/agents/2.8.33/nodejs/ai-bootstrap.js
+
 # ENV APPINSIGHTS_INSTRUMENTATIONKEY xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 # ENV AI_CLOUD_ROLE Frontend
 # ENV AI_CLOUD_ROLE_INSTANCE GhostInstance
-RUN [ "bash", "/tmp/patch_code.sh" ]
+# When hosting in Azure App Svc - Web App Container, add the following "Startup File" command "--require /opt/ai/initAppInsights.js"
