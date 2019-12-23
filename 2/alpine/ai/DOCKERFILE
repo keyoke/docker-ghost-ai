@@ -1,17 +1,16 @@
 FROM ghost:2-alpine
 
-# Copy the bash file for inserting the AI bootstrap code
-COPY /2/alpine/ai/patch_code.sh /tmp
-# Make sure we can execute it
-RUN chmod +x /tmp/patch_code.sh
-
 # Add app-insights globally
-RUN npm install -g applicationinsights
-# Link app insights to avoid rebuild/validate projects npm package tree
-RUN cd current && npm link applicationinsights 
+RUN  mkdir /opt/ai && \
+        cd /opt/ai && \
+        npm install applicationinsights --save
 
-# Modify Ghost to Start monitoring set ikey via Env Vars
+# Copy the ai-bootstrap.js file
+COPY ai-bootstrap.js /opt/ai/
+
+# Configure AI via ENV VARS
 # ENV APPINSIGHTS_INSTRUMENTATIONKEY xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 # ENV AI_CLOUD_ROLE Frontend
 # ENV AI_CLOUD_ROLE_INSTANCE GhostInstance
-RUN [ "bash", "/tmp/patch_code.sh" ]
+# Lets use platform agnositic node method to load AI instead of monkey patching i.e. NODE_OPTIONS='--require "/opt/ai/ai-bootstrap.js"'
+ENV NODE_OPTIONS='--require /opt/ai/ai-bootstrap.js'
