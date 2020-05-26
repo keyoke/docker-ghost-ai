@@ -9,6 +9,8 @@ az acr task run --registry [ACR Name] --file acr-task-3.yaml https://github.com/
 
 ## Schedule task (Commit & base image trigger)
 
+az acr task identity assign --registry [ACR Name] --name docker-ghost-ai --identities "[Managed Identity Resource Id]"
+
 az acr task create --registry [ACR Name] --name docker-ghost-ai --file acr-task-3.yaml --context https://github.com/keyoke/docker-ghost-ai.git --branch master --git-access-token [Github PAT]
 
 az acr task run --registry [ACR Name] --name docker-ghost-ai
