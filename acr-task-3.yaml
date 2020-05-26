@@ -2,3 +2,5 @@ version: v1.1.0
 steps:
   - build: -t $Registry/ghost:3-alpine-ai -f 3/alpine/ai/DOCKERFILE .
   - push: ["$Registry/ghost:3-alpine-ai"]
+  - cmd: az login --identity
+  - cmd: az acr repository list --name $RegistryName
