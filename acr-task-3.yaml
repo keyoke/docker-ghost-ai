@@ -1,0 +1,4 @@
+version: v1.1.0
+steps:
+  - build: -t $Registry/docker-ghost-ai-yaml:$ID -f 3/alpine/ai/DOCKERFILE .
+  - push: ["$Registry/docker-ghost-ai-yaml:$ID"]
