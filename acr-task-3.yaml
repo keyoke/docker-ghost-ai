@@ -1,6 +1,7 @@
 version: v1.1.0
 steps:
-  - build: -t $Registry/ghost:3-alpine-ai -f 3/alpine/ai/DOCKERFILE .
-  - push: ["$Registry/ghost:3-alpine-ai"]
-  - cmd: az login --identity
-  - cmd: az acr repository list --name $RegistryName
+  - build: -t {{.Run.Registry}}/ghost:3-alpine-ai -f 3/alpine/ai/DOCKERFILE .
+  - push: ["{{.Run.Registry}}/ghost:3-alpine-ai"]
+  - cmd: az login --identity  
+  - cmd: az aks get-credentials --resource-group={{.Values.aksRG}} --name={{.Values.aksName}}
+  # - cmd: kubectl set image deployment/{{.Values.aksDeploymentName}} {{.Values.aksContainerName}}={{.Run.Registry}}/ghost:3-alpine-ai

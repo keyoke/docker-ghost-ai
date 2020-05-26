@@ -11,7 +11,7 @@ az acr task run --registry [ACR Name] --file acr-task-3.yaml https://github.com/
 
 az acr task identity assign --registry [ACR Name] --name docker-ghost-ai --identities "[Managed Identity Resource Id]"
 
-az acr task create --registry [ACR Name] --name docker-ghost-ai --file acr-task-3.yaml --context https://github.com/keyoke/docker-ghost-ai.git --branch master --git-access-token [Github PAT]
+az acr task create --registry [ACR Name] --name docker-ghost-ai --file acr-task-3.yaml --context https://github.com/keyoke/docker-ghost-ai.git --branch master --git-access-token [Github PAT] --set aksRG=[AKS RG] --set aksName=[AKS NAME] --set aksDeploymentName=[AKS DEPLOYMENT NAME] --set aksContainerName=[AKS CONTAINER NAME]
 
 az acr task run --registry [ACR Name] --name docker-ghost-ai
 
