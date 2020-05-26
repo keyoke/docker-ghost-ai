@@ -1,0 +1,4 @@
+version: v1.1.0
+steps:
+  - build: -t $Registry/ghost:2-alpine-ai-yaml -f 3/alpine/ai/DOCKERFILE .
+  - push: ["$Registry/ghost:2-alpine-ai-yaml"]
