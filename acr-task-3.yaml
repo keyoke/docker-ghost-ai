@@ -1,9 +1,11 @@
 version: v1.1.0
+alias:
+  values:
+    az_cli: mcr.microsoft.com/azure-cli:latest
 steps:
   - build: -t {{.Run.Registry}}/ghost:3-alpine-ai -f 3/alpine/ai/DOCKERFILE .
   - push: ["{{.Run.Registry}}/ghost:3-alpine-ai"]
-  - cmd: bash curl -L https://aka.ms/InstallAzureCli | bash
-  - cmd: bash az login --identity  
-  - cmd: bash az aks get-credentials --resource-group={{.Values.aksRG}} --name={{.Values.aksName}}
-  - cmd: bash az aks install-cli
-  - cmd: bash kubectl set image deployment/{{.Values.aksDeploymentName}} {{.Values.aksContainerName}}={{.Run.Registry}}/ghost:3-alpine-ai
+  - cmd: $az_cli az login --identity  
+  - cmd: $az_cli az aks get-credentials --resource-group={{.Values.aksRG}} --name={{.Values.aksName}}
+  - cmd: $az_cli az aks install-cli
+  - cmd: $az_cli kubectl set image deployment/{{.Values.aksDeploymentName}} {{.Values.aksContainerName}}={{.Run.Registry}}/ghost:3-alpine-ai
