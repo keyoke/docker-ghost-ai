@@ -5,4 +5,4 @@ steps:
   - cmd: mcr.microsoft.com/azure-cli:b12188ea27a6 az login --identity && 
   - cmd: mcr.microsoft.com/azure-cli:b12188ea27a6 az aks get-credentials --resource-group={{.Values.aksRG}} --name={{.Values.aksName}}
   - cmd: mcr.microsoft.com/azure-cli:b12188ea27a6 az aks install-cli
-  - cmd: mcr.microsoft.com/azure-cli:b12188ea27a6 kubectl set image deployment/{{.Values.aksDeploymentName}} {{.Values.aksContainerName}}={{.Run.Registry}}/ghost:3-alpine-ai
+  #- cmd: mcr.microsoft.com/azure-cli:b12188ea27a6 kubectl set image deployment/{{.Values.aksDeploymentName}} {{.Values.aksContainerName}}={{.Run.Registry}}/ghost:3-alpine-ai
