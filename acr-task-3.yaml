@@ -4,5 +4,4 @@ steps:
   - push: ["{{.Run.Registry}}/ghost:3-alpine-ai"]
   - cmd: mcr.microsoft.com/azure-cli:latest az login --identity
   - cmd: mcr.microsoft.com/azure-cli:latest az aks get-credentials --resource-group={{.Values.aksRG}} --name={{.Values.aksName}}
-  - cmd: mcr.microsoft.com/azure-cli:latest az aks install-cli
-  - cmd: mcr.microsoft.com/azure-cli:latest kubectl set image deployment/{{.Values.aksDeploymentName}} {{.Values.aksContainerName}}={{.Run.Registry}}/ghost:3-alpine-ai
+  - cmd: mcr.microsoft.com/azure-cli:latest az aks install-cli && /usr/local/bin/kubectl set image deployment/{{.Values.aksDeploymentName}} {{.Values.aksContainerName}}={{.Run.Registry}}/ghost:3-alpine-ai
