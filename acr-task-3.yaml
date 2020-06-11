@@ -6,6 +6,5 @@ steps:
   - cmd: mcr.microsoft.com/azure-cli:latest az login --identity --verbose
   - cmd: mcr.microsoft.com/azure-cli:latest az aks get-credentials --resource-group={{.Values.aksRG}} --name={{.Values.aksName}} --verbose
   - cmd: mcr.microsoft.com/azure-cli:latest az aks install-cli --install-location $HOME/kubectl --verbose
-  - cmd: mcr.microsoft.com/azure-cli:latest digest="$(az acr repository show -n $RegistryName --image ghost:3-alpine-ai --query 'digest' -o tsv)"
-  #- cmd: mcr.microsoft.com/azure-cli:latest $HOME/kubectl set image deployment/{{.Values.aksDeploymentName}} {{.Values.aksContainerName}}=ghost@$digest --v=8
+  - cmd: mcr.microsoft.com/azure-cli:latest az acr repository show -n $RegistryName --image ghost:3-alpine-ai --query 'digest' -o tsv | xargs -I% $HOME/kubectl set image deployment/{{.Values.aksDeploymentName}} {{.Values.aksContainerName}}=ghost@% --v=8
   - cmd: acr purge --registry $RegistryName --filter ghost:3-alpine-ai --untagged --ago 1d
