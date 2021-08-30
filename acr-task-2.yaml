@@ -1,6 +1,6 @@
 version: v1.1.0
 steps:
-  - build: -t {{.Run.Registry}}/ghost:2-alpine-ai -f 2/alpine/ai/DOCKERFILE .
+  - build: -t {{.Run.Registry}}/ghost:2-alpine-ai -f 2/alpine/ai/Dockerfile .
   - push: ["{{.Run.Registry}}/ghost:2-alpine-ai"]
   - cmd: acr tag list --registry $RegistryName --repository ghost
   - cmd: mcr.microsoft.com/azure-cli:latest az login --identity --verbose
