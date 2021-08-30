@@ -1,10 +1,10 @@
 version: v1.1.0
 steps:
-  - build: -t {{.Run.Registry}}/ghost:4-alpine-ai -f 4/alpine/ai/DOCKERFILE .
+  - build: -t {{.Run.Registry}}/ghost:4-alpine-ai -f 4/alpine/ai/Dockerfile .
   - push: ["{{.Run.Registry}}/ghost:4-alpine-ai"]
   - cmd: acr tag list --registry $RegistryName --repository ghost
   - cmd: mcr.microsoft.com/azure-cli:latest az login --identity --verbose
   - cmd: mcr.microsoft.com/azure-cli:latest az aks get-credentials --resource-group={{.Values.aksRG}} --name={{.Values.aksName}} --verbose
   - cmd: mcr.microsoft.com/azure-cli:latest az aks install-cli --install-location $HOME/kubectl --verbose
-  - cmd: mcr.microsoft.com/azure-cli:latest az acr repository show -n $RegistryName --image ghost:4-alpine-ai --query 'digest' -o tsv | xargs -I% $HOME/kubectl set image deployment/{{.Values.aksDeploymentName}} {{.Values.aksContainerName}}={{.Run.Registry}}/ghost@%
+  # - cmd: mcr.microsoft.com/azure-cli:latest az acr repository show -n $RegistryName --image ghost:4-alpine-ai --query 'digest' -o tsv | xargs -I% $HOME/kubectl set image deployment/{{.Values.aksDeploymentName}} {{.Values.aksContainerName}}={{.Run.Registry}}/ghost@%
   - cmd: acr purge --registry $RegistryName --filter ghost:4-alpine-ai --untagged --ago 1d
