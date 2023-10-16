@@ -1,11 +1,11 @@
-FROM ghost:5-alpine
+FROM ghost:5
 
 # Add app-insights globally
 RUN  mkdir /opt/ai && \
         cd /opt/ai && \
         npm init -y && \
-        npm install --production --save applicationinsights && \
-        npm install --production --save applicationinsights-native-metrics
+        npm install --omit=dev --save applicationinsights && \
+        npm install --omit=dev --save applicationinsights-native-metrics
 
 # Copy the ai-bootstrap.js file
 COPY ai-bootstrap.js /opt/ai/
