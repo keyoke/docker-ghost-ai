@@ -1,14 +1,15 @@
 FROM ghost:5-alpine
 
 RUN apk add --update --no-cache \
-    python3
+    python3 \
+    build-base 
 
 # Add app-insights globally
 RUN  mkdir /opt/ai && \
         cd /opt/ai && \
         npm init -y && \
-        npm install --omit=dev --save applicationinsights@^1.8.10 && \
-        npm install --omit=dev --save applicationinsights-native-metrics@^0.0.6
+        npm install --omit=dev --save applicationinsights && \
+        npm install --omit=dev --save applicationinsights-native-metrics
 
 # Copy the ai-bootstrap.js file
 COPY ai-bootstrap.js /opt/ai/
