@@ -1,5 +1,8 @@
 FROM ghost:5-alpine
 
+RUN apk add --update --no-cache \
+    python3
+
 # Add app-insights globally
 RUN  mkdir /opt/ai && \
         cd /opt/ai && \
