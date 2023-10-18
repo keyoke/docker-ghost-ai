@@ -1,0 +1,6 @@
+version: v1.1.0
+steps:
+  - build: -t {{.Run.Registry}}/ghost:5-alpine-ai -f 5/alpine/ai/Dockerfile .
+  - push: ["{{.Run.Registry}}/ghost:5-alpine-ai"]
+  - cmd: acr tag list --registry $RegistryName --repository ghost
+  - cmd: acr purge --registry $RegistryName --filter ghost:5-alpine-ai --untagged --ago 1d
