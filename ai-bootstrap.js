@@ -14,19 +14,8 @@ if (setupString) {
     // const appInsights = require(path.join(__dirname,'node_modules','applicationinsights'));
 
     appInsights.setup(setupString)
-    .setAutoDependencyCorrelation(true)
-    .setAutoCollectRequests(true)
-    .setAutoCollectPerformance(true, true)
-    .setAutoCollectExceptions(true)
-    .setAutoCollectDependencies(true)
     .setAutoCollectConsole(true, true)
-    .setUseDiskRetryCaching(true)
-    .setAutoCollectPreAggregatedMetrics(true)
     .setSendLiveMetrics(true)
-    .setAutoCollectHeartbeat(false)
-    .setAutoCollectIncomingRequestAzureFunctions(true)
-    .setInternalLogging(true, true)
-    .setDistributedTracingMode(appInsights.DistributedTracingModes.AI_AND_W3C)
     .enableWebInstrumentation(true)
     .start();
     
