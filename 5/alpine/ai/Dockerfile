@@ -9,7 +9,7 @@ RUN  mkdir /opt/ai && \
         cd /opt/ai && \
         npm init -y && \
         npm install --omit=dev --save applicationinsights && \
-        npm install --omit=dev --save applicationinsights-native-metrics
+        npm install --omit=dev --save applicationinsights-native-metrics@0.0.6
 
 # Copy the ai-bootstrap.js file
 COPY ai-bootstrap.js /opt/ai/
