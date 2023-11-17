@@ -1,18 +1,22 @@
-FROM ghost:5-alpine
+FROM ghost:5-alpine AS depbuild
 
 RUN apk add --update --no-cache \
     python3 \
     build-base 
 
-# Add app-insights globally
-RUN  mkdir /opt/ai && \
-        cd /opt/ai && \
-        npm init -y && \
+WORKDIR /opt/ai
+
+RUN npm init -y && \
         npm install --omit=dev --save applicationinsights && \
         npm install --omit=dev --save applicationinsights-native-metrics@0.0.6
 
+FROM ghost:5-alpine
+
+WORKDIR /opt/ai
+
 # Copy the ai-bootstrap.js file
-COPY ai-bootstrap.js /opt/ai/
+COPY ai-bootstrap.js .
+COPY --from=depbuild /opt/ai .
 
 # Configure AI via ENV VARS
 # ENV APPINSIGHTS_INSTRUMENTATIONKEY xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
