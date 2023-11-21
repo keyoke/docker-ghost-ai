@@ -12,11 +12,9 @@ RUN npm init -y && \
 
 FROM ghost:5-alpine
 
-WORKDIR /opt/ai
-
 # Copy the ai-bootstrap.js file
-COPY ai-bootstrap.js .
-COPY --from=depbuild /opt/ai .
+COPY ai-bootstrap.js /opt/ai/
+COPY --from=depbuild /opt/ai /opt/ai
 
 # Configure AI via ENV VARS
 # ENV APPINSIGHTS_INSTRUMENTATIONKEY xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
